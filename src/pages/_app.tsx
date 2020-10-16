@@ -5,6 +5,7 @@ import theme from "../theme";
 import {
   MeDocument,
   LoginMutation,
+  LogoutMutation,
   MeQuery,
   RegisterMutation,
 } from "../generated/graphql";
@@ -28,6 +29,14 @@ const client = createClient({
     cacheExchange({
       updates: {
         Mutation: {
+          logout: (result, _args, cache, _info) => {
+            betterUpdateQuery<LogoutMutation, MeQuery>(
+              cache,
+              { query: MeDocument },
+              result,
+              () => ({ me: null }),
+            );
+          },
           login: (result, _args, cache, _info) => {
             betterUpdateQuery<LoginMutation, MeQuery>(
               cache,
