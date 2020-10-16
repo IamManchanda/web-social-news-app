@@ -1,16 +1,23 @@
 import { ThemeProvider, CSSReset, ColorModeProvider } from "@chakra-ui/core";
-
+import { createClient, Provider } from "urql";
 import theme from "../theme";
 
-function MyApp({ Component, pageProps }) {
+const client = createClient({
+  url: "http://localhost:4000",
+  fetchOptions: {
+    credentials: "include",
+  },
+});
+
+const MyApp = ({ Component, pageProps }: any) => {
   return (
-    <ThemeProvider theme={theme}>
-      <ColorModeProvider>
+    <Provider value={client}>
+      <ThemeProvider theme={theme}>
         <CSSReset />
         <Component {...pageProps} />
-      </ColorModeProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   );
-}
+};
 
 export default MyApp;
