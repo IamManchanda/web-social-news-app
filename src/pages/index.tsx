@@ -12,7 +12,7 @@ const Index = () => {
     <Fragment>
       <NavBar />
       <Box px={8} py={4}>
-        <div>Hello World</div>
+        <div>Hello World!</div>
         <br />
         {!data ? (
           <div>loading...</div>
