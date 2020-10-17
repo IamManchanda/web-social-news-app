@@ -1,13 +1,24 @@
 {
-  "name": "with-chakra-ui",
+  "name": "web-social-news-app",
   "version": "0.1.0",
-  "private": true,
+  "description": "Web: Social News App",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "generate": "graphql-codegen --config codegen.yml"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IamManchanda/web-social-news-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IamManchanda/web-social-news-app/issues"
+  },
+  "homepage": "https://github.com/IamManchanda/web-social-news-app#readme",
   "dependencies": {
     "@babel/core": "^7.12.1",
     "@chakra-ui/core": "^0.8.0",
@@ -25,7 +36,6 @@
     "react-is": "^16.13.1",
     "urql": "^1.10.1"
   },
-  "license": "MIT",
   "devDependencies": {
     "@graphql-codegen/cli": "1.17.10",
     "@graphql-codegen/typescript": "1.17.10",
