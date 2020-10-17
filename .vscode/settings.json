@@ -17,8 +17,5 @@
     "**/.env.test.local": false,
     "**/.env.production.local": false,
     "**/.vercel": true
-  },
-  "cSpell.words": [
-    "Sasuke"
-  ]
+  }
 }
