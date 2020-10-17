@@ -20,14 +20,18 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     body = (
       <Fragment>
         <NextLink href="/login">
-          <Link color="white" mr={4} fontWeight="bold">
-            Login
-          </Link>
+          <a>
+            <Link color="white" mr={4} fontWeight="bold">
+              Login
+            </Link>
+          </a>
         </NextLink>
         <NextLink href="/register">
-          <Link color="white" fontWeight="bold">
-            Register
-          </Link>
+          <a>
+            <Link color="white" fontWeight="bold">
+              Register
+            </Link>
+          </a>
         </NextLink>
       </Fragment>
     );
@@ -55,9 +59,11 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     <Flex bg="#319795" px={8} py={4}>
       <Box mr="auto">
         <NextLink href="/">
-          <Link color="white" fontWeight="bold">
-            Home
-          </Link>
+          <a>
+            <Link color="white" fontWeight="bold">
+              Home
+            </Link>
+          </a>
         </NextLink>
       </Box>
       <Box ml="auto">{body}</Box>

@@ -65,9 +65,11 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
                 <AlertDescription>
                   please try again{" "}
                   <NextLink href="/forgot-password">
-                    <Link color="teal.500" fontWeight="bold">
-                      with this link.
-                    </Link>
+                    <a>
+                      <Link color="teal.500" fontWeight="bold">
+                        with this link.
+                      </Link>
+                    </a>
                   </NextLink>
                 </AlertDescription>
               </Alert>
