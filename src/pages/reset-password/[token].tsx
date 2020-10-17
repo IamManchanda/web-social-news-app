@@ -2,7 +2,6 @@ import {
   Alert,
   AlertDescription,
   AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Link,
@@ -61,16 +60,17 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
             {tokenError ? (
               <Alert status="error" mt={4}>
                 <AlertIcon />
-                <AlertTitle>{tokenError}!</AlertTitle>
                 <AlertDescription>
-                  please try again{" "}
-                  <NextLink href="/forgot-password">
-                    <a>
-                      <Link color="teal.500" fontWeight="bold">
-                        with this link.
-                      </Link>
-                    </a>
-                  </NextLink>
+                  <Box>{tokenError}!</Box>
+                  <Box mt={2}>
+                    <NextLink href="/forgot-password">
+                      <a>
+                        <Link color="teal.500" fontWeight="bold">
+                          Click here to try again.
+                        </Link>
+                      </a>
+                    </NextLink>
+                  </Box>
                 </AlertDescription>
               </Alert>
             ) : null}
