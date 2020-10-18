@@ -7,7 +7,7 @@ import {
   Link,
 } from "@chakra-ui/core";
 import { Formik, Form } from "formik";
-import { NextPage, GetServerSideProps } from "next";
+import { NextPage } from "next";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -18,11 +18,9 @@ import { createUrqlClient } from "../../utils/create-urql-client";
 import { toErrorMap } from "../../utils/to-error-map";
 import NextLink from "next/link";
 
-interface ResetPasswordProps {
-  token: string;
-}
+interface ResetPasswordProps {}
 
-const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
+const ResetPassword: NextPage<ResetPasswordProps> = ({}) => {
   const router = useRouter();
   const [, resetPassword] = useResetPasswordMutation();
   const [tokenError, setTokenError] = useState("");
@@ -34,7 +32,8 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
         onSubmit={async (values, { setErrors }) => {
           const response = await resetPassword({
             newPassword: values.newPassword,
-            token,
+            token:
+              typeof router.query.token === "string" ? router.query.token : "",
           });
           if (response.data?.resetPassword.errors) {
             const errorMap = toErrorMap(response.data.resetPassword.errors);
@@ -63,12 +62,10 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
                 <AlertDescription>
                   <Box>{tokenError}!</Box>
                   <Box mt={2}>
-                    <NextLink href="/forgot-password">
-                      <a>
-                        <Link color="teal.500" fontWeight="bold">
-                          Click here to try again.
-                        </Link>
-                      </a>
+                    <NextLink href="/forgot-password" passHref>
+                      <Link color="teal.500" fontWeight="bold">
+                        Click here to try again.
+                      </Link>
                     </NextLink>
                   </Box>
                 </AlertDescription>
@@ -87,14 +84,6 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
       </Formik>
     </Wrapper>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  return {
-    props: {
-      token: params?.token as string,
-    },
-  };
 };
 
 export default withUrqlClient(createUrqlClient)(ResetPassword);

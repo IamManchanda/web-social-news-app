@@ -50,12 +50,10 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({}) => {
                     shortly for resetting your password.
                   </Box>
                   <Box mt={2}>
-                    <NextLink href="/forgot-password">
-                      <a>
-                        <Link color="teal.500" fontWeight="bold">
-                          Click here to login.
-                        </Link>
-                      </a>
+                    <NextLink href="/login" passHref>
+                      <Link color="teal.500" fontWeight="bold">
+                        Click here to login.
+                      </Link>
                     </NextLink>
                   </Box>
                 </AlertDescription>

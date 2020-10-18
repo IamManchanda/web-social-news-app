@@ -1,0 +1,11 @@
+mutation CreatePost($options: PostOptions!) {
+  createPost(options: $options) {
+    id
+    title
+    text
+    points
+    creatorId
+    createdAt
+    updatedAt
+  }
+}

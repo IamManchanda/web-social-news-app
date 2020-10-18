@@ -19,19 +19,15 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   } else if (!data?.me) {
     body = (
       <Fragment>
-        <NextLink href="/login">
-          <a>
-            <Link color="white" mr={4} fontWeight="bold">
-              Login
-            </Link>
-          </a>
+        <NextLink href="/login" passHref>
+          <Link color="white" mr={4} fontWeight="bold">
+            Login
+          </Link>
         </NextLink>
-        <NextLink href="/register">
-          <a>
-            <Link color="white" fontWeight="bold">
-              Register
-            </Link>
-          </a>
+        <NextLink href="/register" passHref>
+          <Link color="white" fontWeight="bold">
+            Register
+          </Link>
         </NextLink>
       </Fragment>
     );
@@ -56,14 +52,12 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   return (
-    <Flex bg="#319795" px={8} py={4}>
+    <Flex zIndex={1} position="sticky" top={0} bg="#319795" px={8} py={4}>
       <Box mr="auto">
-        <NextLink href="/">
-          <a>
-            <Link color="white" fontWeight="bold">
-              Home
-            </Link>
-          </a>
+        <NextLink href="/" passHref>
+          <Link color="white" fontWeight="bold">
+            Home
+          </Link>
         </NextLink>
       </Box>
       <Box ml="auto">{body}</Box>
