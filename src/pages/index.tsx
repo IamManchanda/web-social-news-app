@@ -4,14 +4,17 @@ import { usePostsQuery } from "../generated/graphql";
 import { LayoutWrapper } from "../components/layout-wrapper";
 import { Box, Heading, Link, Stack, Text, Flex, Button } from "@chakra-ui/core";
 import NextLink from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const Index = () => {
+  const [variables, setVariables] = useState({
+    limit: 10,
+    cursor: null as null | string,
+    snippetLimit: 175,
+  });
+
   const [{ data, fetching }] = usePostsQuery({
-    variables: {
-      limit: 10,
-      snippetLimit: 160,
-    },
+    variables,
   });
 
   if (!fetching && !data) {
@@ -50,11 +53,22 @@ const Index = () => {
           ))}
         </Stack>
       )}
-      <Flex justify="center">
-        <Button variantColor="teal" my={12}>
-          Load More
-        </Button>
-      </Flex>
+      {data ? (
+        <Flex justify="center">
+          <Button
+            onClick={() =>
+              setVariables({
+                ...variables,
+                cursor: data.posts[data.posts.length - 1].createdAt,
+              })
+            }
+            variantColor="teal"
+            my={12}
+          >
+            Load More
+          </Button>
+        </Flex>
+      ) : null}
     </LayoutWrapper>
   );
 };
