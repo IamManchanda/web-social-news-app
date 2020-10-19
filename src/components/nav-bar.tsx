@@ -56,7 +56,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
       <Box mr="auto">
         <NextLink href="/" passHref>
           <Link color="white" fontWeight="bold">
-            Home
+            Social News
           </Link>
         </NextLink>
       </Box>

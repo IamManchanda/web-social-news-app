@@ -40,6 +40,12 @@ export type Post = {
   creatorId: Scalars['Int'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+  textSnippet: Scalars['String'];
+};
+
+
+export type PostTextSnippetArgs = {
+  snippetLimit: Scalars['Int'];
 };
 
 export type User = {
@@ -234,6 +240,7 @@ export type MeQuery = (
 export type PostsQueryVariables = Exact<{
   limit: Scalars['Int'];
   cursor?: Maybe<Scalars['String']>;
+  snippetLimit: Scalars['Int'];
 }>;
 
 
@@ -241,7 +248,7 @@ export type PostsQuery = (
   { __typename?: 'Query' }
   & { posts: Array<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'createdAt' | 'updatedAt' | 'title'>
+    & Pick<Post, 'id' | 'createdAt' | 'updatedAt' | 'title' | 'textSnippet'>
   )> }
 );
 
@@ -349,12 +356,13 @@ export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'q
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };
 export const PostsDocument = gql`
-    query Posts($limit: Int!, $cursor: String) {
+    query Posts($limit: Int!, $cursor: String, $snippetLimit: Int!) {
   posts(limit: $limit, cursor: $cursor) {
     id
     createdAt
     updatedAt
     title
+    textSnippet(snippetLimit: $snippetLimit)
   }
 }
     `;
