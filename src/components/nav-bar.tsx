@@ -34,6 +34,11 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   } else {
     body = (
       <Flex>
+        <NextLink href="/create-post" passHref>
+          <Link color="white" fontWeight="bold" mr={4}>
+            Create Post
+          </Link>
+        </NextLink>
         <Box color="white" mr={4} fontWeight="bold">
           @{data.me.username}
         </Box>
@@ -52,15 +57,17 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   return (
-    <Flex zIndex={1} position="sticky" top={0} bg="#319795" px={8} py={4}>
-      <Box mr="auto">
-        <NextLink href="/" passHref>
-          <Link color="white" fontWeight="bold">
-            Social News
-          </Link>
-        </NextLink>
-      </Box>
-      <Box ml="auto">{body}</Box>
+    <Flex zIndex={1} position="sticky" top={0} bg="#319795" py={4}>
+      <Flex flex={1} mx="auto" px={4} align="center" maxW="800px">
+        <Box mr="auto">
+          <NextLink href="/" passHref>
+            <Link color="white" fontWeight="bold">
+              Social News
+            </Link>
+          </NextLink>
+        </Box>
+        <Box ml="auto">{body}</Box>
+      </Flex>
     </Flex>
   );
 };

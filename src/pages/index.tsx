@@ -20,14 +20,16 @@ const Index = () => {
 
   if (!fetching && !data) {
     return (
-      <div>
-        There are no posts available. May{" "}
-        <NextLink href="/create-post" passHref>
-          <Link color="teal.500" fontWeight="bold">
-            Create one?
-          </Link>
-        </NextLink>
-      </div>
+      <LayoutWrapper>
+        <div>
+          There are no posts available. May be{" "}
+          <NextLink href="/create-post" passHref>
+            <Link color="teal.500" fontWeight="bold">
+              Create one?
+            </Link>
+          </NextLink>
+        </div>
+      </LayoutWrapper>
     );
   }
 
@@ -52,10 +54,15 @@ const Index = () => {
               p={5}
               shadow="md"
               borderWidth="1px"
+              borderRadius="8px"
               justify="space-between"
             >
               <Box pr={6}>
-                <Heading fontSize="xl">{p.title}</Heading>
+                <NextLink href="/post/[id]" as={`/post/${p.id}`} passHref>
+                  <Link color="teal.500" fontWeight="bold">
+                    <Heading fontSize="xl">{p.title}</Heading>
+                  </Link>
+                </NextLink>
                 <Text mt={2}>Posted by: @{p.creator.username}</Text>
                 <Text mt={6}>{p.textSnippet}</Text>
               </Box>
