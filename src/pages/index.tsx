@@ -5,6 +5,7 @@ import { LayoutWrapper } from "../components/layout-wrapper";
 import { Box, Heading, Link, Stack, Text, Flex, Button } from "@chakra-ui/core";
 import NextLink from "next/link";
 import React, { useState } from "react";
+import { UpvoteSection } from "../components/upvote-section";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -46,11 +47,20 @@ const Index = () => {
       ) : (
         <Stack spacing={8}>
           {data!.posts.posts.map((p) => (
-            <Box key={p.id} p={5} shadow="md" borderWidth="1px">
-              <Heading fontSize="xl">{p.title}</Heading>
-              <Text>Posted by: @{p.creator.username}</Text>
-              <Text mt={4}>{p.textSnippet}</Text>
-            </Box>
+            <Flex
+              key={p.id}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              justify="space-between"
+            >
+              <Box pr={6}>
+                <Heading fontSize="xl">{p.title}</Heading>
+                <Text mt={2}>Posted by: @{p.creator.username}</Text>
+                <Text mt={6}>{p.textSnippet}</Text>
+              </Box>
+              <UpvoteSection post={p} />
+            </Flex>
           ))}
         </Stack>
       )}
