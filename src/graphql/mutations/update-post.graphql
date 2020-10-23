@@ -1,0 +1,13 @@
+mutation UpdatePost(
+  $id: Int!
+  $title: String!
+  $text: String!
+  $snippetLimit: Int!
+) {
+  updatePost(id: $id, title: $title, text: $text) {
+    id
+    title
+    text
+    textSnippet(snippetLimit: $snippetLimit)
+  }
+}
