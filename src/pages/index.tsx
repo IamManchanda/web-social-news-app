@@ -16,21 +16,15 @@ const Index = () => {
     snippetLimit: textSnippetLimit,
   });
 
-  const [{ data, fetching }] = usePostsQuery({
+  const [{ data, error, fetching }] = usePostsQuery({
     variables,
   });
 
   if (!fetching && !data) {
     return (
       <LayoutWrapper>
-        <div>
-          There are no posts available. May be{" "}
-          <NextLink href="/create-post" passHref>
-            <Link color="teal.500" fontWeight="bold">
-              Create one?
-            </Link>
-          </NextLink>
-        </div>
+        <div>Query Failed!</div>
+        <div>{error?.message}</div>
       </LayoutWrapper>
     );
   }
