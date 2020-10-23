@@ -19,6 +19,7 @@ import {
   usePostsQuery,
 } from "../generated/graphql";
 import { createUrqlClient } from "../utils/create-urql-client";
+import { isServer } from "../utils/is-server";
 import { textSnippetLimit } from "../utils/text-snippet-limit";
 
 const Index = () => {
@@ -28,7 +29,9 @@ const Index = () => {
     snippetLimit: textSnippetLimit,
   });
 
-  const [{ data: meData }] = useMeQuery();
+  const [{ data: meData }] = useMeQuery({
+    pause: isServer(),
+  });
   const [{ data, fetching }] = usePostsQuery({
     variables,
   });
