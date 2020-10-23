@@ -1,14 +1,14 @@
 import { Box, Button, Heading } from "@chakra-ui/core";
-import { Formik, Form } from "formik";
-import React from "react";
-import { InputField } from "../components/input-field";
-import { useCreatePostMutation } from "../generated/graphql";
-import { useRouter } from "next/router";
+import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/create-urql-client";
-import { LayoutWrapper } from "../components/layout-wrapper";
-import { useIsAuth } from "../utils/use-is-auth";
+import { useRouter } from "next/router";
+import React from "react";
 import { BackToHomepage } from "../components/back-to-homepage";
+import { InputField } from "../components/input-field";
+import { LayoutWrapper } from "../components/layout-wrapper";
+import { useCreatePostMutation } from "../generated/graphql";
+import { createUrqlClient } from "../utils/create-urql-client";
+import { useIsAuth } from "../utils/use-is-auth";
 
 interface CreatePostProps {}
 
