@@ -83,8 +83,9 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
     cookie = ctx?.req?.headers?.cookie;
   }
 
+  const { NEXT_PUBLIC_API_BACKEND_URL } = process.env;
   return {
-    url: "http://localhost:4000",
+    url: NEXT_PUBLIC_API_BACKEND_URL as string,
     fetchOptions: {
       credentials: "include" as const,
       headers: cookie
