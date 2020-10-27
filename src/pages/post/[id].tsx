@@ -1,7 +1,5 @@
-import { withUrqlClient } from "next-urql";
 import React, { Fragment } from "react";
 import Head from "next/head";
-import { createUrqlClient } from "../../utils/create-urql-client";
 import { LayoutWrapper } from "../../components/layout-wrapper";
 import { Heading, Text, Box, Flex } from "@chakra-ui/core";
 import { BackToHomepage } from "../../components/back-to-homepage";
@@ -11,7 +9,7 @@ import { EditDeletePostButtons } from "../../components/edit-delete-post-buttons
 interface PostProps {}
 
 const Post: React.FC<PostProps> = ({}) => {
-  const [{ data, error, fetching }] = useGetPostFromUrl();
+  const { data, error, loading } = useGetPostFromUrl();
 
   return (
     <Fragment>
@@ -28,7 +26,7 @@ const Post: React.FC<PostProps> = ({}) => {
           key="description"
         />
       </Head>
-      {fetching ? (
+      {loading ? (
         <LayoutWrapper>
           <div>loading...</div>
         </LayoutWrapper>
@@ -64,4 +62,4 @@ const Post: React.FC<PostProps> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Post);
+export default Post;
