@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 import { InputField } from "../components/input-field";
 import { Wrapper } from "../components/wrapper";
-import { useLoginMutation } from "../generated/graphql";
+import { useLoginMutation, MeQuery, MeDocument } from "../generated/graphql";
 import { toErrorMap } from "../utils/to-error-map";
 import { withApollo } from "../utils/with-apollo";
 
@@ -38,6 +38,18 @@ const Login: React.FC<LoginProps> = ({}) => {
             const response = await login({
               variables: {
                 options: values,
+              },
+              update: (cache, { data }) => {
+                cache.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: data?.login.user,
+                  },
+                });
+                cache.evict({
+                  fieldName: "posts:{}",
+                });
               },
             });
             if (response.data?.login.errors) {

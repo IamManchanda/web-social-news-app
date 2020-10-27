@@ -14,7 +14,11 @@ import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import { InputField } from "../../components/input-field";
 import { Wrapper } from "../../components/wrapper";
-import { useResetPasswordMutation } from "../../generated/graphql";
+import {
+  useResetPasswordMutation,
+  MeQuery,
+  MeDocument,
+} from "../../generated/graphql";
 import { toErrorMap } from "../../utils/to-error-map";
 import { withApollo } from "../../utils/with-apollo";
 
@@ -51,6 +55,15 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({}) => {
                   typeof router.query.token === "string"
                     ? router.query.token
                     : "",
+              },
+              update: (cache, { data }) => {
+                cache.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: data?.resetPassword.user,
+                  },
+                });
               },
             });
             if (response.data?.resetPassword.errors) {

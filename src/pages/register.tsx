@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 import { InputField } from "../components/input-field";
 import { Wrapper } from "../components/wrapper";
-import { useRegisterMutation } from "../generated/graphql";
+import { MeQuery, useRegisterMutation, MeDocument } from "../generated/graphql";
 import { toErrorMap } from "../utils/to-error-map";
 import { withApollo } from "../utils/with-apollo";
 
@@ -38,6 +38,15 @@ const Register: React.FC<RegisterProps> = ({}) => {
             const response = await register({
               variables: {
                 options: values,
+              },
+              update: (cache, { data }) => {
+                cache.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: data?.register.user,
+                  },
+                });
               },
             });
             if (response.data?.register.errors) {
