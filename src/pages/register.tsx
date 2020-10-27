@@ -1,7 +1,8 @@
-import { Box, Button } from "@chakra-ui/core";
+import { Box, Button, Flex } from "@chakra-ui/core";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 import { InputField } from "../components/input-field";
@@ -67,14 +68,23 @@ const Register: React.FC<RegisterProps> = ({}) => {
                   type="password"
                 />
               </Box>
-              <Button
-                mt={4}
-                type="submit"
-                isLoading={isSubmitting}
-                variantColor="teal"
-              >
-                Register
-              </Button>
+              <Flex justify="space-between">
+                <Button
+                  mt={4}
+                  type="submit"
+                  isLoading={isSubmitting}
+                  variantColor="teal"
+                >
+                  Register
+                </Button>
+                <NextLink href="/login">
+                  <a>
+                    <Button mt={4} variantColor="teal" variant="outline">
+                      Login
+                    </Button>
+                  </a>
+                </NextLink>
+              </Flex>
             </Form>
           )}
         </Formik>
