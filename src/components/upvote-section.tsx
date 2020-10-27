@@ -4,9 +4,11 @@ import gql from "graphql-tag";
 import React, { useState } from "react";
 import {
   PostSnippetFragment,
+  useMeQuery,
   useVoteMutation,
   VoteMutation,
 } from "../generated/graphql";
+import { isServer } from "../utils/is-server";
 
 interface UpvoteSectionProps {
   post: PostSnippetFragment;
@@ -58,11 +60,18 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ post }) => {
   >("not-loading");
 
   const [vote] = useVoteMutation();
+
+  const { data: meData } = useMeQuery({
+    skip: isServer(),
+  });
+
+  const isLoggedIn = meData?.me;
+
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" mr={4}>
       <IconButton
         variant={post.voteStatus === 1 ? "solid" : "outline"}
-        isDisabled={post.voteStatus === 1 ? true : false}
+        isDisabled={!isLoggedIn || post.voteStatus === 1 ? true : false}
         variantColor="teal"
         style={{ opacity: 1 }}
         aria-label="Upvote Post"
@@ -85,7 +94,7 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ post }) => {
       <Text>{post.points}</Text>
       <IconButton
         variant={post.voteStatus === -1 ? "solid" : "outline"}
-        isDisabled={post.voteStatus === -1 ? true : false}
+        isDisabled={!isLoggedIn || post.voteStatus === -1 ? true : false}
         variantColor="red"
         style={{ opacity: 1 }}
         aria-label="Downvote Post"
