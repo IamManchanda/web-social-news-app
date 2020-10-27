@@ -1,5 +1,4 @@
 import { Box, Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/core";
-import { withUrqlClient } from "next-urql";
 import NextLink from "next/link";
 import React, { Fragment, useState } from "react";
 import Head from "next/head";
@@ -8,7 +7,6 @@ import { LayoutWrapper } from "../components/layout-wrapper";
 import { UpvoteSection } from "../components/upvote-section";
 import { textSnippetLimit } from "../constants/text-snippet-limit";
 import { usePostsQuery } from "../generated/graphql";
-import { createUrqlClient } from "../utils/create-urql-client";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -17,11 +15,11 @@ const Index = () => {
     snippetLimit: textSnippetLimit,
   });
 
-  const [{ data, error, fetching }] = usePostsQuery({
+  const { data, error, loading } = usePostsQuery({
     variables,
   });
 
-  if (!fetching && !data) {
+  if (!loading && !data) {
     return (
       <LayoutWrapper>
         <div>Query Failed!</div>
@@ -55,7 +53,7 @@ const Index = () => {
           </NextLink>
         </Flex>
         <br />
-        {!data && fetching ? (
+        {!data && loading ? (
           <div>loading...</div>
         ) : (
           <Stack spacing={8}>
@@ -115,4 +113,4 @@ const Index = () => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Index);
+export default Index;
