@@ -90,7 +90,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                   Login
                 </Button>
               </Flex>
-              <div className="separator">Or,</div>
+              <div className="separator">OR,</div>
               <Flex justify="space-between" mt={4}>
                 <NextLink href="/register">
                   <a>
