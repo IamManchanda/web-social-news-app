@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/core";
 import NextLink from "next/link";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import Head from "next/head";
 import { EditDeletePostButtons } from "../components/edit-delete-post-buttons";
 import { LayoutWrapper } from "../components/layout-wrapper";
@@ -9,14 +9,13 @@ import { textSnippetLimit } from "../constants/text-snippet-limit";
 import { usePostsQuery } from "../generated/graphql";
 
 const Index = () => {
-  const [variables, setVariables] = useState({
-    limit: 10,
-    cursor: null as null | string,
-    snippetLimit: textSnippetLimit,
-  });
-
-  const { data, error, loading } = usePostsQuery({
-    variables,
+  const { data, error, loading, fetchMore, variables } = usePostsQuery({
+    variables: {
+      limit: 10,
+      snippetLimit: textSnippetLimit,
+      cursor: null as null | string,
+    },
+    notifyOnNetworkStatusChange: true,
   });
 
   return (
@@ -91,13 +90,17 @@ const Index = () => {
           {data && data.posts.hasMore ? (
             <Flex justify="center">
               <Button
-                onClick={() =>
-                  setVariables({
-                    ...variables,
-                    cursor:
-                      data.posts.posts[data.posts.posts.length - 1].createdAt,
-                  })
-                }
+                onClick={() => {
+                  fetchMore({
+                    variables: {
+                      limit: variables?.limit,
+                      snippetLimit: variables?.snippetLimit,
+                      cursor:
+                        data.posts.posts[data.posts.posts.length - 1].createdAt,
+                    },
+                  });
+                }}
+                isLoading={loading}
                 variantColor="teal"
                 my={12}
               >
