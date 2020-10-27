@@ -37,7 +37,14 @@ const CreatePost: React.FC<CreatePostProps> = ({}) => {
           initialValues={{ title: "", text: "" }}
           onSubmit={async (values) => {
             const { errors } = await createPost({
-              variables: { options: values },
+              variables: {
+                options: values,
+              },
+              update: (cache) => {
+                cache.evict({
+                  fieldName: "posts:{}",
+                });
+              },
             });
             if (!errors) {
               router.push("/");
