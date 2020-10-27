@@ -7,6 +7,7 @@ import { LayoutWrapper } from "../components/layout-wrapper";
 import { UpvoteSection } from "../components/upvote-section";
 import { textSnippetLimit } from "../constants/text-snippet-limit";
 import { usePostsQuery } from "../generated/graphql";
+import { withApollo } from "../utils/with-apollo";
 
 const Index = () => {
   const { data, error, loading, fetchMore, variables } = usePostsQuery({
@@ -114,4 +115,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withApollo({ ssr: true })(Index);

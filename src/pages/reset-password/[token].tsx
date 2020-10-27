@@ -16,6 +16,7 @@ import { InputField } from "../../components/input-field";
 import { Wrapper } from "../../components/wrapper";
 import { useResetPasswordMutation } from "../../generated/graphql";
 import { toErrorMap } from "../../utils/to-error-map";
+import { withApollo } from "../../utils/with-apollo";
 
 interface ResetPasswordProps {}
 
@@ -104,4 +105,4 @@ const ResetPassword: NextPage<ResetPasswordProps> = ({}) => {
   );
 };
 
-export default ResetPassword;
+export default withApollo({ ssr: false })(ResetPassword);

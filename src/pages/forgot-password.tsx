@@ -13,6 +13,7 @@ import React, { Fragment, useState } from "react";
 import { InputField } from "../components/input-field";
 import { Wrapper } from "../components/wrapper";
 import { useForgotPasswordMutation } from "../generated/graphql";
+import { withApollo } from "../utils/with-apollo";
 
 interface ForgotPasswordProps {}
 
@@ -88,4 +89,4 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({}) => {
   );
 };
 
-export default ForgotPassword;
+export default withApollo({ ssr: false })(ForgotPassword);

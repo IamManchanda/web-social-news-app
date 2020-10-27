@@ -5,6 +5,7 @@ import { Heading, Text, Box, Flex } from "@chakra-ui/core";
 import { BackToHomepage } from "../../components/back-to-homepage";
 import { useGetPostFromUrl } from "../../utils/use-get-post-from-url";
 import { EditDeletePostButtons } from "../../components/edit-delete-post-buttons";
+import { withApollo } from "../../utils/with-apollo";
 
 interface PostProps {}
 
@@ -62,4 +63,4 @@ const Post: React.FC<PostProps> = ({}) => {
   );
 };
 
-export default Post;
+export default withApollo({ ssr: true })(Post);
