@@ -65,7 +65,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                   type="password"
                 />
               </Box>
-              <Flex justify="space-between">
+              <Flex justify="center" mb={4}>
                 <Button
                   mt={4}
                   type="submit"
@@ -74,6 +74,17 @@ const Login: React.FC<LoginProps> = ({}) => {
                 >
                   Login
                 </Button>
+              </Flex>
+              <div className="separator">Or,</div>
+              <Flex justify="space-between" mt={4}>
+                <NextLink href="/register">
+                  <a>
+                    <Button mt={4} variantColor="teal" variant="outline">
+                      Register
+                    </Button>
+                  </a>
+                </NextLink>
+
                 <NextLink href="/forgot-password">
                   <a>
                     <Button mt={4} variantColor="red" variant="outline">
@@ -86,6 +97,25 @@ const Login: React.FC<LoginProps> = ({}) => {
           )}
         </Formik>
       </Wrapper>
+      <style jsx>{`
+        .separator {
+          display: flex;
+          align-items: center;
+          text-align: center;
+        }
+        .separator::before,
+        .separator::after {
+          content: "";
+          flex: 1;
+          border-bottom: 1px solid #ccc;
+        }
+        .separator::before {
+          margin-right: 0.5rem;
+        }
+        .separator::after {
+          margin-left: 0.5rem;
+        }
+      `}</style>
     </Fragment>
   );
 };
