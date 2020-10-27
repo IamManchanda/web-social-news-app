@@ -1,6 +1,5 @@
 import { Box, Button, Heading } from "@chakra-ui/core";
 import { Form, Formik } from "formik";
-import { withUrqlClient } from "next-urql";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
@@ -12,21 +11,21 @@ import {
   usePostQuery,
   useUpdatePostMutation,
 } from "../../../generated/graphql";
-import { createUrqlClient } from "../../../utils/create-urql-client";
 import { useGetQueryIdInt } from "../../../utils/use-get-query-id-int";
+import { withApollo } from "../../../utils/with-apollo";
 
 interface EditPostProps {}
 
 const EditPost: React.FC<EditPostProps> = ({}) => {
   const router = useRouter();
   const queryIdInt = useGetQueryIdInt();
-  const [{ data, error, fetching }] = usePostQuery({
-    pause: queryIdInt === -1,
+  const { data, error, loading } = usePostQuery({
+    skip: queryIdInt === -1,
     variables: {
       id: queryIdInt,
     },
   });
-  const [, updatePost] = useUpdatePostMutation();
+  const [updatePost] = useUpdatePostMutation();
 
   return (
     <Fragment>
@@ -43,7 +42,7 @@ const EditPost: React.FC<EditPostProps> = ({}) => {
           key="description"
         />
       </Head>
-      {fetching ? (
+      {loading ? (
         <LayoutWrapper>
           <div>loading...</div>
         </LayoutWrapper>
@@ -62,9 +61,11 @@ const EditPost: React.FC<EditPostProps> = ({}) => {
             initialValues={{ title: data.post.title, text: data.post.text }}
             onSubmit={async (values) => {
               await updatePost({
-                id: queryIdInt,
-                snippetLimit: textSnippetLimit,
-                ...values,
+                variables: {
+                  id: queryIdInt,
+                  snippetLimit: textSnippetLimit,
+                  ...values,
+                },
               });
               if (typeof router.query.next === "string") {
                 router.push(router.query.next);
@@ -110,4 +111,4 @@ const EditPost: React.FC<EditPostProps> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(EditPost);
+export default withApollo({ ssr: false })(EditPost);

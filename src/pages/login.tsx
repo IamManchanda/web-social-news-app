@@ -1,21 +1,20 @@
 import { Box, Button, Flex } from "@chakra-ui/core";
 import { Form, Formik } from "formik";
-import { withUrqlClient } from "next-urql";
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 import { InputField } from "../components/input-field";
 import { Wrapper } from "../components/wrapper";
-import { useLoginMutation } from "../generated/graphql";
-import { createUrqlClient } from "../utils/create-urql-client";
+import { useLoginMutation, MeQuery, MeDocument } from "../generated/graphql";
 import { toErrorMap } from "../utils/to-error-map";
+import { withApollo } from "../utils/with-apollo";
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {
   const router = useRouter();
-  const [, login] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   return (
     <Fragment>
@@ -36,7 +35,23 @@ const Login: React.FC<LoginProps> = ({}) => {
         <Formik
           initialValues={{ usernameOrEmail: "", password: "" }}
           onSubmit={async (values, { setErrors }) => {
-            const response = await login({ options: values });
+            const response = await login({
+              variables: {
+                options: values,
+              },
+              update: (cache, { data }) => {
+                cache.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: data?.login.user,
+                  },
+                });
+                cache.evict({
+                  fieldName: "posts:{}",
+                });
+              },
+            });
             if (response.data?.login.errors) {
               setErrors(toErrorMap(response.data.login.errors));
             } else if (response.data?.login.user) {
@@ -120,4 +135,4 @@ const Login: React.FC<LoginProps> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(Login);
+export default withApollo({ ssr: false })(Login);
